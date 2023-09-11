@@ -65,14 +65,20 @@ public class PanModalPresentationAnimator: NSObject {
     private func animatePresentation(transitionContext: UIViewControllerContextTransitioning) {
 
         guard
-            let toVC = transitionContext.viewController(forKey: .to),
-            let fromVC = transitionContext.viewController(forKey: .from)
+            let toVC = transitionContext.viewController(forKey: .to)
+                /* we don't need this VC because we won't be sending UI events to it anymore
+                 let fromVC = transitionContext.viewController(forKey: .from)
+                 */
             else { return }
 
         let presentable = panModalLayoutType(from: transitionContext)
 
-        // Calls viewWillAppear and viewWillDisappear
-        fromVC.beginAppearanceTransition(false, animated: true)
+        /*
+         Views are presented modally without dismissing the presenter view,
+         therefore these events are not needed and might cause side effects on the presente rview
+         // Calls viewWillAppear and viewWillDisappear
+         fromVC.beginAppearanceTransition(false, animated: true)
+         */
         
         // Presents the view in shortForm position, initially
         let yPos: CGFloat = presentable?.shortFormYPos ?? 0.0
@@ -92,8 +98,12 @@ public class PanModalPresentationAnimator: NSObject {
         PanModalAnimator.animate({
             panView.frame.origin.y = yPos
         }, config: presentable) { [weak self] didComplete in
-            // Calls viewDidAppear and viewDidDisappear
-            fromVC.endAppearanceTransition()
+            /*
+             Views are presented modally without dismissing the presenter view,
+             therefore these events are not needed and might cause side effects on the presente rview
+             // Calls viewDidAppear and viewDidDisappear
+             fromVC.endAppearanceTransition()
+             */
             transitionContext.completeTransition(didComplete)
             self?.feedbackGenerator = nil
         }
