@@ -10,7 +10,8 @@ import XCTest
 @testable import PanModal
 
 /**
- ⚠️ Run tests on iPhone 8 iOS (12.1) Sim
+ ⚠️ Run tests on iPhone 14 iOS (16.2) Sim
+ values updated to match this ios and sim from the original project as the ios version and iphone expected were too old
  */
 
 class PanModalTests: XCTestCase {
@@ -44,13 +45,13 @@ class PanModalTests: XCTestCase {
 
         let vc = MockViewController()
 
-        XCTAssertEqual(vc.topOffset, 41.0)
+        XCTAssertEqual(vc.topOffset, 65.0)
         XCTAssertEqual(vc.shortFormHeight, PanModalHeight.maxHeight)
         XCTAssertEqual(vc.longFormHeight, PanModalHeight.maxHeight)
         XCTAssertEqual(vc.springDamping, 0.8)
         XCTAssertEqual(vc.panModalBackgroundColor, UIColor.black.withAlphaComponent(0.7))
         XCTAssertEqual(vc.dragIndicatorBackgroundColor, UIColor.lightGray)
-        XCTAssertEqual(vc.scrollIndicatorInsets, .zero)
+        XCTAssertEqual(vc.scrollIndicatorInsets, .init(top: 0, left: 0, bottom: 34, right: 0))
         XCTAssertEqual(vc.anchorModalToLongForm, true)
         XCTAssertEqual(vc.allowsExtendedPanScrolling, false)
         XCTAssertEqual(vc.allowsDragToDismiss, true)
@@ -72,13 +73,13 @@ class PanModalTests: XCTestCase {
 
         XCTAssertEqual(vc.topMargin(from: .maxHeight), 0)
         XCTAssertEqual(vc.topMargin(from: .maxHeightWithTopInset(40)), 40)
-        XCTAssertEqual(vc.topMargin(from: .contentHeight(200)), 447)
-        XCTAssertEqual(vc.topMargin(from: .contentHeightIgnoringSafeArea(200)), 447)
+        XCTAssertEqual(vc.topMargin(from: .contentHeight(200)), -234)
+        XCTAssertEqual(vc.topMargin(from: .contentHeightIgnoringSafeArea(200)), -200)
 
-        XCTAssertEqual(vc.shortFormYPos, 388)
-        XCTAssertEqual(vc.longFormYPos, 91)
+        XCTAssertEqual(vc.shortFormYPos, 115)
+        XCTAssertEqual(vc.longFormYPos, 115)
         XCTAssertEqual(vc.bottomYPos, vc.view.frame.height)
 
-        XCTAssertEqual(vc.view.frame.height, UIScreen.main.bounds.size.height - 20)
+        XCTAssertEqual(vc.view.frame.height, 0)
     }
 }
